@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block title_content %}
+<title>Ask Mate|Question</title>
+{% endblock title_content %}
+{% block h1_content %}
+<table align="center">
+    <tr>
+        <td>
+            <a href="/question/{{  id  }}/edit">Edit Question</a>
+        </td>
+        <td>
+            <h1>{{ vote_number }}</h1>
+        </td>
+        <td>
+            <h1>{{ title }}</h1>
+        </td>
+        <td>
+            <form action="/question/{{ id }}/vote-up">
+                <input type="submit" value="Vote up">
+            </form>
+        </td>
+        <td>
+            <form action="/question/{{ id }}/vote-down">
+                <input type="submit" value="Vote down">
+            </form>
+        </td>
+    </tr>
+</table>
+{% endblock h1_content %}
+{% block body_content %}
+<div class="question">{{ message }}</div>
+<br>
+{% if image != "" %}
+<p>
+    <div class="picture_div" style="margin:0px auto; text-align:center;">
+    <img src="{{ image }}" width="200" height="120" alt="Your image">
+</p>
+{% else %}
+    <p>
+        <div align="center">
+            No image given. :'(
+        </div>
+    </p>
+{% endif %}
+<p>
+<table align="center">
+    {% for answer, answer_id, answers_vote_number, submission_time in answers_list %}
+        <tr>
+            <td>
+                <form action="/question/{{ id }}/answer-vote-up/{{ submission_time }}">
+                    <input type="submit" value="Vote up">
+                </form>
+            </td>
+            <td>
+                <form action="/question/{{ id }}/answer-vote-down/{{ submission_time }}">
+                    <input type="submit" value="Vote down">
+                </form>
+            </td>
+            <td>
+                <div class="questions_list">{{ answers_vote_number }}</div>
+            </td>
+            <td>
+                <div class="questions_list">{{ answer }}</div>
+            </td>
+            <td>
+                <a href="/answer/{{ answer_id }}/delete/{{ id }}">
+                    <img src="/static/delete.png" height="20">
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+</p>
+<form method="POST" action="/question/{{ id }}">
+<p>
+	<div align="center">
+    	<textarea name="text" rows="5" cols="40">{{ add_answer }}</textarea>
+    </div>
+</p>
+<p>
+    <div align="center">
+        URL of your image:
+    </div>
+</p>
+<p>
+<div align="center">
+    <input type="text" name="response-image">
+</div>
+</p>
+<div align="center">
+	<input type="submit" value="Post answer">
+</div>
+</form>
+    <h5>Number of times this question was viewed: {{ views }}</h5>
+<a href = "/">Back to questions</a>
+{% endblock %}

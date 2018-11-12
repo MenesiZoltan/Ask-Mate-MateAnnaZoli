@@ -1,2 +1,2 @@
-# Ask-Mate-MateAnnaZoli
-Cont. of askmate project with only 3 members
+# wswp-ask-mate
+Web and SQL with Python / 1st TW week / Ask Mate project
