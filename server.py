@@ -14,17 +14,17 @@ def route_list():
 @app.route("/ask-question", methods=["GET", "POST"])
 def route_ask_question():
     if request.method == "GET":
-        return "Niceű job"
+        return render_template('ask-question.html')
     else:
         return "matéka meleg"
 
-@app.route("/question/<id>")
+@app.route("/question/<id>", methods=["GET", "POST"])
 def route_question(id):
-    pass
-
-@app.route('/question/<id>', methods=['POST'])
-def route_question_add_answer(id):
-    pass
+    if request.method == "GET":
+        questions = data_manager.get_question_details(id)
+        answers = data_manager.get_answer_details(id)
+        return render_template("question.html", question=questions, answers=answers)
+    return "this will be the add answer stuff"
 
 
 @app.route("/answer/<answer_id>/delete/<id_>")

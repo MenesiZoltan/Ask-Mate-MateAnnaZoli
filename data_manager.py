@@ -28,3 +28,24 @@ def show_questions_by_order(cursor, direction):
                         ''')
         details = cursor.fetchall()
         return details
+
+@connection.connection_handler
+def get_question_details(cursor, id):
+    cursor.execute('''
+                    SELECT vote_number, title, message FROM question
+                    WHERE id = %(id)s;
+                    ''',
+                   {'id': id})
+    details = cursor.fetchone()
+    return details
+
+
+@connection.connection_handler
+def get_answer_details(cursor, id):
+    cursor.execute('''
+                    SELECT vote_number, message FROM answer
+                    WHERE question_id = %(id)s;
+                    ''',
+                   {'id': id})
+    details = cursor.fetchall()
+    return details
