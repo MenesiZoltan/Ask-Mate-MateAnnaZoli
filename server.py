@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import data_manager
 import data_manager
 import connection
@@ -16,7 +16,14 @@ def route_ask_question():
     if request.method == "GET":
         return render_template('ask-question.html')
     else:
-        return "matéka meleg"
+        new_question = {
+            "question_subject": request.form["question_subject"],
+            "question_text": request.form["question_text"],
+            "url": request.form["url"]
+        }
+
+        data_manager.add_new_question(new_question)
+        return redirect("/")
 
 @app.route("/question/<id>", methods=["GET", "POST"])
 def route_question(id):
