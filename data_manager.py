@@ -70,3 +70,14 @@ def add_new_question(cursor, new_question):
                     "title": title,
                     "message": message,
                     "image": image})
+
+
+@connection.connection_handler
+def search_question(cursor, search_parameter):
+    cursor.execute('''
+                    SELECT id, vote_number, title, submission_time FROM question
+                    WHERE title iLIKE %(search_parameter)s;
+                    ''',
+                   {"search_parameter": '%'+search_parameter +'%'})
+    search_result = cursor.fetchall()
+    return search_result
