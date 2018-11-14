@@ -103,3 +103,5 @@ def search_question(cursor, search_parameter):
                    {"search_parameter": '%'+search_parameter +'%'})
     search_result = cursor.fetchall()
     return search_result
+
+

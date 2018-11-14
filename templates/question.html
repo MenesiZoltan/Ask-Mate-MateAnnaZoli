@@ -24,7 +24,7 @@
     <h2>{{ question["message"] }}</h2>
 
 
-    <table align="center">
+    <table align="left">
         {% for item in answers %}
         <tr>
             {% for key in item %}
@@ -34,10 +34,11 @@
         {% endfor %}
     </table>
 
+
     <form method="post" action="/add_answer/{{ question["id"] }}">
     <textarea name="answer_text" rows="5" cols="40"></textarea>
     <input type="submit" value="Post Answer">
     </form>
-
+    
     </body>
 </html>
