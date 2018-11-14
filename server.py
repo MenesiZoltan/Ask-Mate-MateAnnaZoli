@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import data_manager
-import data_manager
 import connection
 import time
 

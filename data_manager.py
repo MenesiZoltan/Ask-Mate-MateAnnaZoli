@@ -49,3 +49,10 @@ def get_answer_details(cursor, id):
                    {'id': id})
     details = cursor.fetchall()
     return details
+
+
+# @connection.connection_handler
+# def add_comment():
+#     cursor.execute('''
+#                    INSERT INTO
+#                    ''')
