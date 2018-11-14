@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Ask mate - List</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 
@@ -25,12 +27,24 @@
 
 
     <table>
+        <th></th>
+        <th></th>
         <th>Id</th>
         <th>Votes</th>
         <th>Title</th>
         <th>Submission Time</th>
         {% for item in questions %}
             <tr>
+            <form action="/question/vote_up/{{ item['id'] }}" method="post">
+            <td>
+                <input type="submit" name="vote" value="Vote up" >
+            </td>
+            </form>
+            <form action="/question/vote_down/{{ item['id'] }}" method="post">
+            <td>
+                <input type="submit" value="Vote down" name="vote">
+            </td>
+            </form>
                 {% for key in item %}
                     {% if key == 'title' %}
                         <td> <a href="/question/{{ item['id'] }}"> {{ item[key] }} </a></td>

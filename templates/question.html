@@ -30,6 +30,11 @@
             {% for key in item %}
                 <td>{{ item[key] }}</td>
             {% endfor %}
+            <td>
+                <form action="/answer/{{ item["id"] }}/edit" method="get">
+                <input type="submit" name="edit_answer" value="Edit answer" >
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>

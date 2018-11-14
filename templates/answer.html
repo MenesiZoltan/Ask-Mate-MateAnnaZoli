@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>Answer</title>
+    </head>
+<body>
+    <h2>{{ answer_detail['message'] }}</h2>
+    <form method="post" action="/answer/{{ answer_detail["id"] }}/edit">
+    <textarea name="edit_answer_text" rows="5" cols="40"></textarea>
+    <input type="submit" value="Edit answer">
+    </form>
+</body>
+</html>
