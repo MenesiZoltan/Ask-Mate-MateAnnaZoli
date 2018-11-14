@@ -25,6 +25,12 @@
         <input type="submit" value="Submit">
     </form>
 
+    <form action="/search_question" method="post">
+        <textarea row="1" cols="40" name="search_parameter" placeholder="What would you like to know?"></textarea>
+        <input type="submit" value="GO!">
+    </form>
+
+    {% if action == None %}
 
     <table>
         <th></th>
@@ -55,5 +61,31 @@
             </tr>
         {% endfor %}
     </table>
+
+    {% endif %}
+    {% if action == "search" %}
+        <br><a href="/">Back to the main page</a>
+
+        <h3>Search results:</h3>
+
+    <table>
+        <th>Id</th>
+        <th>Votes</th>
+        <th>Title</th>
+        <th>Submission Time</th>
+        {% for item in results %}
+            <tr>
+                {% for key in item %}
+                    {% if key == 'title' %}
+                        <td> <a href="/question/{{ item['id'] }}"> {{ item[key] }} </a></td>
+                    {% else %}
+                        <td>  {{ item[key] }}  </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% endif %}
 </body>
 </html>
