@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% include 'header.html' %}
 
 <html>
     <head>
@@ -9,9 +10,6 @@
 
 {% block body_content %}
     <body>
-    {% block h1_content %}
-        <h1> ASK MATE - BY KETAMIN Kft. :D </h1>
-    {% endblock h1_content%}
     <table align="center">
         <tr>
             <td>
@@ -26,7 +24,7 @@
             </td>
         </tr>
     </table>
-    <h2>{{ question["message"] }}</h2>
+    <h3>{{ question["message"] }}</h3>
 
 
     <table align="center">

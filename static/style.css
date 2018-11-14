@@ -2,17 +2,20 @@ h1{
 	text-align: center;
 	font-weight: bold;
 	font-size: 20px;
-	background-color: #A0E7F5;
+	background-color: darkslategray;
 	border: bottom 3px solid #fff;
 	padding: 20px;
+	color: yellow;
+	font-family: "Arial Black", Gadget, sans-serif;
 }
 h4{
-    text-align: center;
+    text-align: left;
 	font-weight: bold;
 	font-size: 18px;
-	background-color: #A0E7F5;
-	border: 3px solid #fff;
-	padding: 20px;
+	background-color: darkslategray;
+	border: 3px solid darkslategray;
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 head{
 	text-align: center;
@@ -20,9 +23,9 @@ head{
 }
 body{
 	margin: 40px;
-	background-color: yellow;
-	color: #4D4D4D;
-	font-family: Helvetica;
+	background-color: darkslategray;
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 18px;
 	text-align: center;
 }
@@ -44,4 +47,10 @@ body{
   	padding: 10px;
   	font-size: 25px;
   	text-align: center;
+}
+a {
+    color: yellow;
+}
+th {
+	font-size: 20px;
 }

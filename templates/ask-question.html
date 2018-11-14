@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% include 'header.html' %}
 
 <html>
     <head>
@@ -9,9 +10,6 @@
         {% block title_content %}
         <title>Ask mate - List</title>
         {% endblock title_content %}
-        {% block h1_content %}
-        <h1> ASK MATE - BY KETAMIN Kft. :D </h1>
-        {% endblock h1_content%}
         <h1>Ask a question</h1>
         <form method="post" action="/ask-question">
             <p>
