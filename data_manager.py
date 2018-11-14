@@ -33,7 +33,7 @@ def show_questions_by_order(cursor, direction):
 @connection.connection_handler
 def get_question_details(cursor, id):
     cursor.execute('''
-                    SELECT vote_number, title, message FROM question
+                    SELECT vote_number, title, message, id FROM question
                     WHERE id = %(id)s;
                     ''',
                    {'id': id})
@@ -76,6 +76,22 @@ def add_new_question(cursor, new_question):
                     "title": title,
                     "message": message,
                     "image": image})
+
+
+@connection.connection_handler
+def add_answer(cursor, new_answer):
+    submission_time = datetime.now()
+    question_id = new_answer["question_id"]
+    vote_number = 0
+    message = new_answer["answer_text"]
+    cursor.execute('''
+                   INSERT INTO answer(submission_time, vote_number, question_id, message)
+                   VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s)
+                   ''',
+                   {"submission_time": submission_time,
+                    "vote_number": vote_number,
+                    "question_id": question_id,
+                    "message": message})
 
 
 @connection.connection_handler
