@@ -34,7 +34,8 @@ def route_question(id):
     if request.method == "GET":
         questions = data_manager.get_question_details(id)
         answers = data_manager.get_answer_details(id)
-        return render_template("question.html", question=questions, answers=answers)
+        comments = data_manager.get_comments(id)
+        return render_template("question.html", question=questions, answers=answers, comments=comments)
 
 
 @app.route("/search_question", methods=["POST"])
@@ -93,6 +94,13 @@ def route_add_answer(id):
     }
     data_manager.add_answer(new_answer)
     return redirect("/")
+
+
+@app.route("/add_comment/<id>", methods=["POST"])
+def add_comment(id):
+    comment = request.form["comment_text"]
+    data_manager.add_comment(id, comment)
+    return redirect("/question/" + str(id))
 
 
 if __name__ == "__main__":

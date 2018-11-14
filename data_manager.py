@@ -149,3 +149,28 @@ def search_question(cursor, search_parameter):
                    {"search_parameter": '%'+search_parameter +'%'})
     search_result = cursor.fetchall()
     return search_result
+
+
+@connection.connection_handler
+def get_comments(cursor, question_id):
+    cursor.execute('''
+                   SELECT * FROM comment
+                   WHERE question_id = %(question_id)s;
+                   ''',
+                   {"question_id": question_id})
+    comments = cursor.fetchall()
+    return comments
+
+
+@connection.connection_handler
+def add_comment(cursor, question_id, message):
+    submission_time = datetime.now()
+    edited_count = 0
+    cursor.execute('''
+                   INSERT INTO comment(question_id, message, submission_time, edited_count)
+                   VALUES(%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s);
+                   ''',
+                   {"question_id": question_id,
+                    "message": message,
+                    "submission_time": submission_time,
+                    "edited_count": edited_count})

@@ -45,10 +45,26 @@
     </table>
 
     <form method="post" action="/add_answer/{{ question["id"] }}">
-    <textarea name="answer_text" rows="5" cols="40"></textarea>
-    <input type="submit" value="Post Answer">
+        <textarea name="answer_text" rows="5" cols="40"></textarea>
+        <input type="submit" value="Post Answer">
     </form>
 
+    <p>Comments:</p>
+
+    <table align="center">
+        {% for item in comments %}
+            <tr>
+                {% for key in item %}
+                    <td>{{ item[key] }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <form method="post" action="/add_comment/{{ question["id"] }}">
+        <textarea name="comment_text" rows="5" cols="40"></textarea>
+        <input type="submit" value="Add Comment">
+    </form>
     </body>
 {% endblock body_content%}
 </html>
