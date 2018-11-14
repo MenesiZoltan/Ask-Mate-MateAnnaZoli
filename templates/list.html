@@ -1,16 +1,17 @@
+{% extends "layout.html" %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% block title_content %}
     <title>Ask mate - List</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    {% endblock title_content %}
 </head>
 
-
+{% block body_content %}
 <body>
     <h1> ASK MATE - BY KETAMIN Kft. :D </h1>
-
 
     <a href="/ask-question">Ask a question</a>
 
@@ -88,4 +89,5 @@
 
     {% endif %}
 </body>
+{% endblock body_content%}
 </html>
