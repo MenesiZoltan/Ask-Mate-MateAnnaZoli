@@ -154,7 +154,7 @@ def search_question(cursor, search_parameter):
 @connection.connection_handler
 def get_comments(cursor, question_id):
     cursor.execute('''
-                   SELECT * FROM comment
+                   SELECT message,submission_time FROM comment
                    WHERE question_id = %(question_id)s;
                    ''',
                    {"question_id": question_id})
