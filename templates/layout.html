@@ -3,11 +3,14 @@
     <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     {% block title_content %}{% endblock %}
-    {% block h1_content %}{% endblock %}
+
     </head>
     <body>
         <hr>
         {% block body_content %}
+            {% block h1_content %}
+                <h1> ASK MATE - BY KETAMIN Kft. :D </h1>
+            {% endblock %}
         {% endblock %}
     </body>
 </html>

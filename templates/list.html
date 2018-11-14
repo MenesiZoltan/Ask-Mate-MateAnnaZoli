@@ -11,12 +11,12 @@
 
 {% block body_content %}
 <body>
-    <h1> ASK MATE - BY KETAMIN Kft. :D </h1>
+    {% block h1_content %}
+        <h1> ASK MATE - BY KETAMIN Kft. :D </h1>
+    {% endblock h1_content %}
 
     <a href="/ask-question">Ask a question</a>
 
-
-    <h4>Order User questions as:</h4>
     <form action="/" method="post">
         <select name="order_type">
             <option value="" disabled selected hidden>Select ordering </option>
