@@ -1,25 +1,35 @@
+{% extends "layout.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% block title_content %}
     <title>Ask mate - List</title>
+    {% endblock title_content %}
 </head>
 
-
+{% block body_content %}
 <body>
     <h1> ASK MATE - BY KETAMIN Kft. :D </h1>
-
 
     <a href="/ask-question">Ask a question</a>
 
 
     <h4>Order User questions as:</h4>
-    <form action="/" method="get">
-        <select name="select_order">
-            <option value="" disabled selected hidden>Select order by time</option>
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
+    <form action="/" method="post">
+        <select name="order_type">
+            <option value="" disabled selected hidden>Select ordering </option>
+            <option value="time">Submission Time</option>
+            <option value="vote_numbers">Vote Numbers</option>
         </select>
+
+        <select name="direction">
+            <option value="" disabled selected hidden>Select direction </option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+
         <input type="submit" value="Submit">
     </form>
 
@@ -31,12 +41,24 @@
     {% if action == None %}
 
     <table>
+        <th></th>
+        <th></th>
         <th>Id</th>
         <th>Votes</th>
         <th>Title</th>
         <th>Submission Time</th>
         {% for item in questions %}
             <tr>
+            <form action="/question/vote_up/{{ item['id'] }}" method="post">
+            <td>
+                <input type="submit" name="vote" value="Vote up" >
+            </td>
+            </form>
+            <form action="/question/vote_down/{{ item['id'] }}" method="post">
+            <td>
+                <input type="submit" value="Vote down" name="vote">
+            </td>
+            </form>
                 {% for key in item %}
                     {% if key == 'title' %}
                         <td> <a href="/question/{{ item['id'] }}"> {{ item[key] }} </a></td>
@@ -74,4 +96,5 @@
 
     {% endif %}
 </body>
+{% endblock body_content%}
 </html>

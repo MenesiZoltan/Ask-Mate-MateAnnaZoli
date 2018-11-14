@@ -14,21 +14,38 @@ def show_questions(cursor):
 
 
 @connection.connection_handler
-def show_questions_by_order(cursor, direction):
-    if direction == "desc":
-        cursor.execute('''
-                        SELECT id, vote_number, title, submission_time FROM question
-                        ORDER BY submission_time DESC;
-                        ''')
-        details = cursor.fetchall()
-        return details
-    elif direction == "asc" or direction == None:
-        cursor.execute('''
-                        SELECT id, vote_number, title, submission_time FROM question
-                        ORDER BY submission_time;
-                        ''')
-        details = cursor.fetchall()
-        return details
+def show_questions_by_order(cursor, direction, order_type):
+    if order_type == "time":
+        if direction == "desc":
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY submission_time DESC;
+                            ''')
+            details = cursor.fetchall()
+            return details
+        elif direction == "asc" or direction == None:
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY submission_time;
+                            ''')
+            details = cursor.fetchall()
+            return details
+
+    elif order_type == "vote_numbers":
+        if direction == "desc":
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY vote_number DESC;
+                            ''')
+            details = cursor.fetchall()
+            return details
+        elif direction == "asc":
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY vote_number DESC;
+                            ''')
+            details = cursor.fetchall()
+            return details
 
 @connection.connection_handler
 def get_question_details(cursor, id):
@@ -44,7 +61,7 @@ def get_question_details(cursor, id):
 @connection.connection_handler
 def get_answer_details(cursor, id):
     cursor.execute('''
-                    SELECT vote_number, message FROM answer
+                    SELECT vote_number, message, id FROM answer
                     WHERE question_id = %(id)s;
                     ''',
                    {'id': id})
@@ -52,11 +69,40 @@ def get_answer_details(cursor, id):
     return details
 
 
-# @connection.connection_handler
-# def add_comment():
-#     cursor.execute('''
-#                    INSERT INTO
-#                    ''')
+@connection.connection_handler
+def get_the_answer(cursor, id):
+    cursor.execute('''
+                    SELECT message, id, question_id FROM answer
+                    WHERE id = %(id)s
+                    ''',
+                   {'id': id})
+    details = cursor.fetchone()
+    return details
+
+
+@connection.connection_handler
+def change_vote_number(cursor, vote, id):
+    if vote == "Vote up":
+        vote_num = 1
+    if vote == "Vote down":
+        vote_num = -1
+    cursor.execute('''
+                    UPDATE question
+                    SET vote_number = vote_number + %(vote_num)s
+                    WHERE id = %(id)s;
+                    ''',
+                   {'id': id, 'vote_num': vote_num})
+
+
+@connection.connection_handler
+def get_current_answer_details(cursor, id, new_message):
+    cursor.execute('''
+                    UPDATE answer
+                    SET message = %(new_message)s
+                    WHERE id = %(id)s;
+                    ''',
+                   {'id': id, 'new_message': new_message})
+
 
 @connection.connection_handler
 def add_new_question(cursor, new_question):
@@ -105,3 +151,26 @@ def search_question(cursor, search_parameter):
     return search_result
 
 
+@connection.connection_handler
+def get_comments(cursor, question_id):
+    cursor.execute('''
+                   SELECT * FROM comment
+                   WHERE question_id = %(question_id)s;
+                   ''',
+                   {"question_id": question_id})
+    comments = cursor.fetchall()
+    return comments
+
+
+@connection.connection_handler
+def add_comment(cursor, question_id, message):
+    submission_time = datetime.now()
+    edited_count = 0
+    cursor.execute('''
+                   INSERT INTO comment(question_id, message, submission_time, edited_count)
+                   VALUES(%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s);
+                   ''',
+                   {"question_id": question_id,
+                    "message": message,
+                    "submission_time": submission_time,
+                    "edited_count": edited_count})
