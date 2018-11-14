@@ -5,6 +5,7 @@ import time
 
 app = Flask(__name__)
 
+
 @app.route("/", methods=["POST", "GET"])
 def route_list():
     if request.method == "GET":
@@ -14,6 +15,7 @@ def route_list():
         questions = data_manager.show_questions_by_order(request.form['direction'],
                                                          request.form["order_type"])
         return render_template('list.html', questions=questions, action=None)
+
 
 @app.route("/ask-question", methods=["GET", "POST"])
 def route_ask_question():
@@ -28,6 +30,7 @@ def route_ask_question():
 
         data_manager.add_new_question(new_question)
         return redirect("/")
+
 
 @app.route("/question/<id>", methods=["GET", "POST"])
 def route_question(id):
