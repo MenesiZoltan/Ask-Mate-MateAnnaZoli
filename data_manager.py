@@ -14,21 +14,38 @@ def show_questions(cursor):
 
 
 @connection.connection_handler
-def show_questions_by_order(cursor, direction):
-    if direction == "desc":
-        cursor.execute('''
-                        SELECT id, vote_number, title, submission_time FROM question
-                        ORDER BY submission_time DESC;
-                        ''')
-        details = cursor.fetchall()
-        return details
-    elif direction == "asc" or direction == None:
-        cursor.execute('''
-                        SELECT id, vote_number, title, submission_time FROM question
-                        ORDER BY submission_time;
-                        ''')
-        details = cursor.fetchall()
-        return details
+def show_questions_by_order(cursor, direction, order_type):
+    if order_type == "time":
+        if direction == "desc":
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY submission_time DESC;
+                            ''')
+            details = cursor.fetchall()
+            return details
+        elif direction == "asc" or direction == None:
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY submission_time;
+                            ''')
+            details = cursor.fetchall()
+            return details
+
+    elif order_type == "vote_numbers":
+        if direction == "desc":
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY vote_number DESC;
+                            ''')
+            details = cursor.fetchall()
+            return details
+        elif direction == "asc":
+            cursor.execute('''
+                            SELECT id, vote_number, title, submission_time FROM question
+                            ORDER BY vote_number DESC;
+                            ''')
+            details = cursor.fetchall()
+            return details
 
 @connection.connection_handler
 def get_question_details(cursor, id):
