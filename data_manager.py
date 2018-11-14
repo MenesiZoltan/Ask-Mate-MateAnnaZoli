@@ -50,7 +50,7 @@ def show_questions_by_order(cursor, direction, order_type):
 @connection.connection_handler
 def get_question_details(cursor, id):
     cursor.execute('''
-                    SELECT vote_number, title, message FROM question
+                    SELECT vote_number, title, message, id FROM question
                     WHERE id = %(id)s;
                     ''',
                    {'id': id})
@@ -61,12 +61,47 @@ def get_question_details(cursor, id):
 @connection.connection_handler
 def get_answer_details(cursor, id):
     cursor.execute('''
-                    SELECT vote_number, message FROM answer
+                    SELECT vote_number, message, id FROM answer
                     WHERE question_id = %(id)s;
                     ''',
                    {'id': id})
     details = cursor.fetchall()
     return details
+
+
+@connection.connection_handler
+def get_the_answer(cursor, id):
+    cursor.execute('''
+                    SELECT message, id, question_id FROM answer
+                    WHERE id = %(id)s
+                    ''',
+                   {'id': id})
+    details = cursor.fetchone()
+    return details
+
+
+@connection.connection_handler
+def change_vote_number(cursor, vote, id):
+    if vote == "Vote up":
+        vote_num = 1
+    if vote == "Vote down":
+        vote_num = -1
+    cursor.execute('''
+                    UPDATE question
+                    SET vote_number = vote_number + %(vote_num)s
+                    WHERE id = %(id)s;
+                    ''',
+                   {'id': id, 'vote_num': vote_num})
+
+
+@connection.connection_handler
+def get_current_answer_details(cursor, id, new_message):
+    cursor.execute('''
+                    UPDATE answer
+                    SET message = %(new_message)s
+                    WHERE id = %(id)s;
+                    ''',
+                   {'id': id, 'new_message': new_message})
 
 
 @connection.connection_handler
@@ -87,6 +122,22 @@ def add_new_question(cursor, new_question):
                     "title": title,
                     "message": message,
                     "image": image})
+
+
+@connection.connection_handler
+def add_answer(cursor, new_answer):
+    submission_time = datetime.now()
+    question_id = new_answer["question_id"]
+    vote_number = 0
+    message = new_answer["answer_text"]
+    cursor.execute('''
+                   INSERT INTO answer(submission_time, vote_number, question_id, message)
+                   VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s)
+                   ''',
+                   {"submission_time": submission_time,
+                    "vote_number": vote_number,
+                    "question_id": question_id,
+                    "message": message})
 
 
 @connection.connection_handler
