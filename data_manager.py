@@ -174,3 +174,43 @@ def add_comment(cursor, question_id, message):
                     "message": message,
                     "submission_time": submission_time,
                     "edited_count": edited_count})
+
+
+@connection.connection_handler
+def get_comment(cursor, question_id):
+    cursor.execute('''
+                   SELECT message, id FROM comment
+                   WHERE question_id=%(question_id)s;
+                   ''',
+                   {"question_id":question_id})
+    message = cursor.fetchone()
+    return message
+
+
+@connection.connection_handler
+def edit_comment(cursor, message, question_id):
+    cursor.execute('''
+                   UPDATE comment
+                   SET message=%(message)s
+                   WHERE question_id=%(question_id)s;
+                   ''',
+                   {"message": message, "question_id": question_id})
+
+
+@connection.connection_handler
+def delete_comment(cursor, question_id):
+    cursor.execute('''
+                   DELETE FROM comment WHERE question_id=%(question_id)s;
+                   ''',
+                   {"question_id": question_id})
+
+
+@connection.connection_handler
+def get_comment_id(cursor, question_id,message):
+    cursor.execute('''
+                   SELECT id FROM comment
+                   WHERE question_id=%(question_id)s AND message=%(message)s;
+                   ''',
+                   {"question_id": question_id, "message": message})
+    comment_id = cursor.fetchone()
+    return comment_id

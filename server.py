@@ -38,7 +38,8 @@ def route_question(id):
         questions = data_manager.get_question_details(id)
         answers = data_manager.get_answer_details(id)
         comments = data_manager.get_comments(id)
-        return render_template("question.html", question=questions, answers=answers, comments=comments)
+        comment = data_manager.get_comment(id)
+        return render_template("question.html", question=questions, answers=answers, comments=comments, comment=comment)
 
 
 @app.route("/search_question", methods=["POST"])
@@ -85,7 +86,6 @@ def route_edit_answer(answer_id):
     else:
         new_message = request.form["edit_answer_text"]
         data_manager.get_current_answer_details(answer_id, new_message)
-        print(answer_detail)
         return redirect("/question/" + str(answer_detail['question_id']))
 
 
@@ -103,6 +103,17 @@ def route_add_answer(id):
 def add_comment(id):
     comment = request.form["comment_text"]
     data_manager.add_comment(id, comment)
+    return redirect("/question/" + str(id))
+
+
+@app.route("/edit_comment/<id>")
+def edit_comment(id):
+
+
+
+@app.route("/delete_comment/<id>", methods=["POST"])
+def delete_comment(id):
+    data_manager.delete_comment(id)
     return redirect("/question/" + str(id))
 
 
