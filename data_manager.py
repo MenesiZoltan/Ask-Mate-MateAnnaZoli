@@ -154,7 +154,7 @@ def search_question(cursor, search_parameter):
 @connection.connection_handler
 def get_comments(cursor, question_id):
     cursor.execute('''
-                   SELECT message,submission_time FROM comment
+                   SELECT message,submission_time, id FROM comment
                    WHERE question_id = %(question_id)s;
                    ''',
                    {"question_id": question_id})
@@ -200,7 +200,7 @@ def edit_comment(cursor, message, question_id):
 @connection.connection_handler
 def delete_comment(cursor, question_id):
     cursor.execute('''
-                   DELETE FROM comment WHERE question_id=%(question_id)s;
+                   DELETE FROM comment WHERE id=%(question_id)s;
                    ''',
                    {"question_id": question_id})
 
@@ -214,3 +214,15 @@ def get_comment_id(cursor, question_id,message):
                    {"question_id": question_id, "message": message})
     comment_id = cursor.fetchone()
     return comment_id
+
+@connection.connection_handler
+def get_question_id_of_comment(cursor, comment_id):
+    cursor.execute('''
+                    SELECT question_id FROM comment
+                    WHERE id = %(comment_id)s;
+                    ''',
+                   {'comment_id': comment_id})
+    question_id = cursor.fetchone()
+    return question_id
+
+
